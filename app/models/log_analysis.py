@@ -1,9 +1,9 @@
 from sqlalchemy import TIMESTAMP, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
-from .base import Base
+from .base import BaseModel
 
 
-class LogAnalysis(Base):
+class LogAnalysisModel(BaseModel):
     __tablename__ = "log_analysis"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)

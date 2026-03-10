@@ -1,9 +1,9 @@
 from sqlalchemy import String, TIMESTAMP, func
 from sqlalchemy.orm import Mapped, mapped_column
-from .base import Base
+from .base import BaseModel
 
 
-class User(Base):
+class UserModel(BaseModel):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
