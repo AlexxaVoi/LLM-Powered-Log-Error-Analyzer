@@ -1,4 +1,4 @@
-name: Style Check
+name: CI
 
 on:
   push:
