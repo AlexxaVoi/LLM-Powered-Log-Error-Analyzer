@@ -8,5 +8,5 @@ class UserModel(BaseModel):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     username: Mapped[str] = mapped_column(String(15), unique=True)
-    email: Mapped[str] = mapped_column(String(255), unique=True)
+    password: Mapped[str] = mapped_column(String(25), unique=True)
     created_at: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, server_default=func.now())

@@ -1,0 +1,2 @@
+ALLOWED_EXTENSIONS = (".txt", ".log", ".csv")
+KEYWORDS = r"\b(?:ERROR|CRITICAL|EXCEPTION|FAILED)\b"

@@ -8,11 +8,10 @@ from app.services.log_parser import clean_log, file_transformation
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from app.constants import ALLOWED_EXTENSIONS
 
 
 router = APIRouter()
-
-# ...add authentication
 
 
 @router.get("", response_model=List[LogReadSchema])
@@ -28,9 +27,14 @@ async def upload_log(
         user_id: int,
         file: UploadFile = File(...),
         db: Session = Depends(get_db)):
+    if not file.filename.endswith(ALLOWED_EXTENSIONS):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only .txt, .log and .csv files are allowed"
+        )
+
     content = await file.read()
     clean_log_text = file_transformation(content)
-
     if not clean_log_text:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
