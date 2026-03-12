@@ -2,10 +2,10 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from app.main import app
 from app.database import get_db
 from app.models.base import BaseModel
+from app.models.user import UserModel
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -47,3 +47,15 @@ def client(db):
     yield TestClient(app)
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def user(db):
+    user = UserModel(
+        username="test_user",
+        password="test123"
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
