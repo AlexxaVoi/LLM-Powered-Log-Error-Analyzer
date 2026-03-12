@@ -11,7 +11,8 @@ router = APIRouter()
 @router.post("/login", response_model=UserReadSchema)
 async def login(data: UserCreateSchema, db: Session = Depends(get_db)):
 
-    get_user = select(UserModel).where(UserModel.email == data.email)
+    get_user = select(UserModel).where(
+        UserModel.username == data.username and UserModel.password == data.password)
     user = db.scalars(get_user).one_or_none()
 
     if not user:
@@ -25,7 +26,7 @@ async def login(data: UserCreateSchema, db: Session = Depends(get_db)):
 @router.post("/register", response_model=UserReadSchema)
 async def register(data: UserCreateSchema, db: Session = Depends(get_db)):
 
-    query = select(UserModel).where(UserModel.email == data.email)
+    query = select(UserModel).where(UserModel.username == data.username)
     existing_user = db.scalars(query).one_or_none()
 
     if existing_user:
@@ -36,7 +37,7 @@ async def register(data: UserCreateSchema, db: Session = Depends(get_db)):
 
     new_user = UserModel(
         username=data.username,
-        email=data.email
+        password=data.password
     )
 
     db.add(new_user)
