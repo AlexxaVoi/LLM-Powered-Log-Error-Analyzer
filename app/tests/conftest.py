@@ -64,6 +64,11 @@ def user(db):
 
 
 @pytest.fixture
+def auth(user):
+    return (user.username, "test123")
+
+
+@pytest.fixture
 def log_in_db(db, user):
     log = LogModel(user_id=user.id, log_text="ERROR Something happened")
     db.add(log)
