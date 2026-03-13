@@ -12,7 +12,7 @@ router = APIRouter()
 async def login(data: UserCreateSchema, db: Session = Depends(get_db)):
 
     get_user = select(UserModel).where(
-        UserModel.username == data.username and UserModel.password == data.password)
+        UserModel.username == data.username, UserModel.password == data.password)
     user = db.scalars(get_user).one_or_none()
 
     if not user:
