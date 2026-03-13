@@ -1,4 +1,4 @@
 from .database import engine
-from .models.base import Base
+from .models.base import BaseModel
 
-Base.metadata.create_all(bind=engine)
+BaseModel.metadata.create_all(bind=engine)
