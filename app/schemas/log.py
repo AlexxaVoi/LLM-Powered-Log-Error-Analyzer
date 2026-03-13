@@ -4,7 +4,6 @@ from typing import List
 
 
 class LogCreateSchema(BaseModel):
-    user_id: int
     log_text: str
 
 
