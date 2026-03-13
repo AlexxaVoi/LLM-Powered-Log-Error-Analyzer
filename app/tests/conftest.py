@@ -6,6 +6,8 @@ from app.main import app
 from app.database import get_db
 from app.models.base import BaseModel
 from app.models.user import UserModel
+from app.models.log import LogModel
+from unittest.mock import patch, AsyncMock
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -59,3 +61,23 @@ def user(db):
     db.commit()
     db.refresh(user)
     return user
+
+
+@pytest.fixture
+def auth(user):
+    return (user.username, "test123")
+
+
+@pytest.fixture
+def log_in_db(db, user):
+    log = LogModel(user_id=user.id, log_text="ERROR Something happened")
+    db.add(log)
+    db.commit()
+    db.refresh(log)
+    return log
+
+
+@pytest.fixture
+def mock_ai_analysis():
+    with patch("app.routers.log.get_ai_analysis", new_callable=AsyncMock) as mock:
+        yield mock

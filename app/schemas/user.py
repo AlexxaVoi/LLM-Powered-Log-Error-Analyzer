@@ -9,6 +9,5 @@ class UserCreateSchema(BaseModel):
 class UserReadSchema(BaseModel):
     id: int
     username: str
-    password: str
 
     model_config = ConfigDict(from_attributes=True)
